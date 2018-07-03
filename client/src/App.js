@@ -5,7 +5,7 @@ import { auth, provider } from './firebase/firebase.js';
 import './App.css';
 import Nav from './components/nav';
 import Home from './components/Home';
-import Settings from './components/Settings';
+// import Settings from './components/Settings';
 import Stories from './components/Stories';
 import Profile from './components/Profile';
 
@@ -63,7 +63,7 @@ class App extends Component {
         {/* Disable links if not logged in */}
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/settings" component={Settings} />
+          {/* <Route exact path="/settings" component={Settings} /> */}
           <Route exact path="/stories" component={Stories} />
           <Route exact path="/profile" component={Profile} />
         </Switch>

@@ -30,3 +30,13 @@
 .googleSignInBtn {
   width: 120px;
 }
+
+.fa-cog {
+  float: right;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+#displayName {
+  float: left;
+}
