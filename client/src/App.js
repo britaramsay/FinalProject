@@ -1,7 +1,13 @@
 import React, { Component } from "react";
-// import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { auth, provider } from './firebase/firebase.js';
 // import { CONSTANTS } from "@firebase/util";
+import './App.css';
+import Nav from './components/nav';
+import Home from './components/Home';
+import Settings from './components/Settings';
+import Stories from './components/Stories';
+import Profile from './components/Profile';
 
 class App extends Component {
 
@@ -11,11 +17,12 @@ class App extends Component {
     this.state = {
       user: null
     }
-
-    this.login = this.login.bind(this); // <-- add this line
-    this.logout = this.logout.bind(this); // <-- add this line
+    // bind this to functions
+    this.login = this.login.bind(this); 
+    this.logout = this.logout.bind(this); 
   }
   
+  // Check if user is logged in or out when component mounts
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if(user) {
@@ -23,22 +30,26 @@ class App extends Component {
       }
     })
   }
-  
+
+  // Login with firebase Google authentication
   login() {
     auth.signInWithPopup(provider) 
-      .then((result) => {
+      .then(result => {
         const user = result.user;
         console.log(user)
         this.setState({
+          // Set user
           user
         });
       });
   }
 
+  // Logout
   logout() {
     auth.signOut()
       .then(() => {
         this.setState({
+          // Set user to null
           user: null
         });
       });
@@ -46,19 +57,18 @@ class App extends Component {
 
   render () {  
     return(
+     <Router>
       <div>
-        {this.state.user ?
-          <button onClick={this.logout}>Log Out</button>                
-          :
-          <button onClick={this.login}>Log In</button>              
-        }
-       
-        {this.state.user ?
-          <h4>{this.state.user.displayName} </h4>
-          :
-          <p>Please log in</p>
-        }
+        <Nav login = {this.login} logout = {this.logout} user = {this.state.user} />
+        {/* Disable links if not logged in */}
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/settings" component={Settings} />
+          <Route exact path="/stories" component={Stories} />
+          <Route exact path="/profile" component={Profile} />
+        </Switch>
       </div>
+      </Router>
     )
   }
 }
