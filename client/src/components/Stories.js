@@ -1,25 +1,52 @@
 import React, { Component } from "react";
-// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// import { auth, provider } from './firebase/firebase.js';
-// import { CONSTANTS } from "@firebase/util";
-// import './App.css';
-// import Nav from './components/nav';
-
+import '../App.css';
+import API from "../utils/API";
+import Story from './Story.js';
 class Stories extends Component {
+    constructor() {
+        super()
 
-  // Check if user is logged in or out when component mounts
-  componentDidMount() {
-    console.log(this.props.user)
-  }
-
-  render () {  
-    return(
+        this.state = {
+            story_titles: []
+        }
+    }
+  
+    // Check if user is logged in or out when component mounts
+    componentDidMount() {
+        var stories = []
+        API.getStories()
+            .then(res => {
+                stories = res.data.map(item => {
+                    return (<p key={item._id} id={item._id} onClick={this.onItemClickHandler}>{item.title} by {item.author}</p>)
+                })
+                this.setState({story_titles: stories})
+            })
+            .catch( err => console.log(err))
+        
+    }
+//<a href={'api/stories/'+item._id} > 
+    onItemClickHandler = (e) => {
+        console.log(e.target.id)
+        API.getStory(e.target.id)
+            .then(res => {
+                this.setState({story: res.data[0]})
+            })
+            .catch( err => console.log(err))
+    }
+    render () {  
+        return(
      
-      <div>
-       This is the stories page. Show public stories you can translate. Upload button here and on profile?
-      </div>
-    )
-  }
+            <div>
+                
+            {this.state.story ? 
+                <Story data={this.state.story}/>
+                :
+                <div>{this.state.story_titles}</div>        
+            }
+                
+            </div>
+        )
+    }
 }
 
 export default Stories; 
