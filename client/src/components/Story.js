@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import '../App.css';
 import API from "../utils/API";
+import ReactDOM from 'react-dom';
 
 class Story extends Component {
     constructor() {
@@ -12,20 +13,32 @@ class Story extends Component {
     }
   
     componentDidMount() {
-        // Get shorter ones!!
-        // Split
-        var paragraphs = this.props.data.paragraphs.map(element => {
-            // return element.split(' ').map(x => {
-            //     return '<span key='+ x + 'id='+x+'>'+x+'</span>'
-            // })+'\n' STIRNG
-            var r = element.split(' ').map(x => {
-                return (<p></p>)
-            })+'\n'
-            console.log(r.toString())
-            return r            
+
+        var paragraphs = this.props.data.paragraphs.map((element, i) => {
+
+            var wordsArr = element.split(' ')
+            var htmlWords = wordsArr.map( (x, index) => {
+
+                var id = i + '-' + index
+                
+                if(index === wordsArr.length - 1)
+                    return (<span key={id} id={id} data-word={x} onClick={this.onItemClickHandler}>{x}<br/></span>)
+                else if(index === 0)
+                    return (<span key={id} id={id} data-word={x} onClick={this.onItemClickHandler}>&emsp;{x} </span>)
+                else
+                    return (<span key={id} id={id} data-word={x} onClick={this.onItemClickHandler}>{x} </span>)
+            })
+
+            return htmlWords      
         });
-        console.log(paragraphs.toString())
-        this.setState({text: paragraphs.toString()})
+
+        ReactDOM.render(paragraphs, document.getElementById('test'))
+    }
+
+    onItemClickHandler = (e) => {
+        console.log(e.target.dataset.word)
+        // get definition
+        // button to save to list
     }
 
     render () {  
@@ -35,11 +48,12 @@ class Story extends Component {
                 
                 {this.props.data.title}<br/>
                 {this.props.data.author}<br/>
-                {this.state.text ?
-                    <div>{this.state.text}</div>
+                <div id="test"></div>
+                {/* {this.state.text ?
+                    <div></div>
                     :
                     <p></p>
-                }
+                } */}
             </div>
         )
     }
