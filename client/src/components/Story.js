@@ -32,12 +32,12 @@ class Story extends Component {
 
             var id = i + '-' + index
             
-            // save diff variable for data-word with commas/etc. trimmed
-
+            // If last word in paragraph, return with a new line
             if(index === wordsArr.length - 1)
-                return (<span key={id} data-word={x} onClick={this.onItemClickHandler}>{x}<br/></span>)
+                return (<span key={id} data-word={x} onClick={this.onItemClickHandler}>{x}<br/><br/></span>)
+            // if first word in the paragraph, add a tab character    
             else if(index === 0)
-                return (<span key={id} data-word={x} onClick={this.onItemClickHandler}>&emsp;{x} </span>)
+                return (<span key={id} data-word={x} onClick={this.onItemClickHandler}>&emsp;&emsp;{x} </span>)
             else
                 return (<span key={id} data-word={x} onClick={this.onItemClickHandler}>{x} </span>)
         })
@@ -63,7 +63,7 @@ class Story extends Component {
                         <div className='message' id="test"></div>
                     </div>
                     <div className='col'>
-                        <div className='message success' id='translatedText'>ihrtgoihjdoifgjkdfhgkjf</div>
+                        <div className='message success' id='translatedText'></div>
                     </div>
                 </div>
             </div>
