@@ -1,3 +1,5 @@
 module.exports  = {
-    Story: require('./story')
+    Story: require('./story'),
+    Translatedstorie: require('./translated'),
+    Test: require('./test')
 }

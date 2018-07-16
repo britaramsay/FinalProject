@@ -17,8 +17,9 @@ class Stories extends Component {
         API.getStories()
             .then(res => {
                 stories = res.data.map(item => {
-                    // console.log(item)
-                    return (<p key={item._id} id={item._id} onClick={this.onItemClickHandler}>{item.title} by {item.author}</p>)
+                    item.available = item.available.map(x => x.language)
+                    console.log(item.available)
+                    return (<p key={item._id} id={item._id} data-languages={item.available} onClick={this.onItemClickHandler}>{item.title} by {item.author} | {item.available}</p>)
                 })
                 this.setState({story_titles: stories})
             })

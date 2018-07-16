@@ -6,6 +6,7 @@ const app = express();
 const mongoose = require("mongoose");
 const apiRoutes = require("./routes");
 
+
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

@@ -13,26 +13,36 @@ class Story extends Component {
     }
   
     componentDidMount() {
-
+        console.log(this.props.data.available[0].paragraphs)
         var paragraphs = this.props.data.paragraphs.map((element, i) => {
-
-            var wordsArr = element.split(' ')
-            var htmlWords = wordsArr.map( (x, index) => {
-
-                var id = i + '-' + index
-                
-                if(index === wordsArr.length - 1)
-                    return (<span key={id} id={id} data-word={x} onClick={this.onItemClickHandler}>{x}<br/></span>)
-                else if(index === 0)
-                    return (<span key={id} id={id} data-word={x} onClick={this.onItemClickHandler}>&emsp;{x} </span>)
-                else
-                    return (<span key={id} id={id} data-word={x} onClick={this.onItemClickHandler}>{x} </span>)
-            })
-
-            return htmlWords      
+            return this.makeStoryHTML(element, i)   
         });
 
+        var translaredParagraphs = this.props.data.available[0].paragraphs.map((element, i) => {
+            return this.makeStoryHTML(element, i)
+        })
+
         ReactDOM.render(paragraphs, document.getElementById('test'))
+        ReactDOM.render(translaredParagraphs, document.getElementById('translatedText'))
+    }
+
+    makeStoryHTML = (element, i) => {
+        var wordsArr = element.split(' ')
+        var htmlWords = wordsArr.map( (x, index) => {
+
+            var id = i + '-' + index
+            
+            // save diff variable for data-word with commas/etc. trimmed
+
+            if(index === wordsArr.length - 1)
+                return (<span key={id} data-word={x} onClick={this.onItemClickHandler}>{x}<br/></span>)
+            else if(index === 0)
+                return (<span key={id} data-word={x} onClick={this.onItemClickHandler}>&emsp;{x} </span>)
+            else
+                return (<span key={id} data-word={x} onClick={this.onItemClickHandler}>{x} </span>)
+        })
+
+        return htmlWords 
     }
 
     onItemClickHandler = (e) => {
@@ -48,12 +58,14 @@ class Story extends Component {
                 
                 {this.props.data.title}<br/>
                 {this.props.data.author}<br/>
-                <div id="test"></div>
-                {/* {this.state.text ?
-                    <div></div>
-                    :
-                    <p></p>
-                } */}
+                <div className='row auto'>
+                    <div className='col'>
+                        <div className='message' id="test"></div>
+                    </div>
+                    <div className='col'>
+                        <div className='message success' id='translatedText'>ihrtgoihjdoifgjkdfhgkjf</div>
+                    </div>
+                </div>
             </div>
         )
     }

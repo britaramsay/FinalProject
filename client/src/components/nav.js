@@ -49,6 +49,7 @@ class Nav extends Component {
                 {/* fix w css? if({this.state.user}) */}
                 <i className="fas fa-cog" onClick={this.openModal}></i>
             </span>
+            
             <ul className="nav justify-content-center">
                 <li className="nav-item">
                     <Link to="/" id="homeLink">Home</Link>| 
@@ -62,7 +63,9 @@ class Nav extends Component {
             </ul>
             {/* Show correct login/logout button */}
             {this.props.user ?
-                <button onClick={this.props.logout}>Log Out</button>                
+                <button className="button outline" onClick={this.props.logout}>Log Out</button>                
+                //    <button class="button outline">Button</button>
+
                 :
                 <img className='googleSignInBtn' onClick={this.props.login} src='/assets/images/btn_google_signin_light_normal_web.png' alt='google-sign-in'/>       
             }
