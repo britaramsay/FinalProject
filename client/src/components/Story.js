@@ -21,9 +21,10 @@ class Story extends Component {
         var translaredParagraphs = this.props.data.available[0].paragraphs.map((element, i) => {
             return this.makeStoryHTML(element, i)
         })
-
-        ReactDOM.render(paragraphs, document.getElementById('test'))
-        ReactDOM.render(translaredParagraphs, document.getElementById('translatedText'))
+        this.setState({paragraphs: paragraphs})
+        this.setState({translaredParagraphs: translaredParagraphs})
+        // ReactDOM.render(paragraphs, document.getElementById('test'))
+        // ReactDOM.render(translaredParagraphs, document.getElementById('translatedText'))
     }
 
     makeStoryHTML = (element, i) => {
@@ -46,7 +47,11 @@ class Story extends Component {
     }
 
     onItemClickHandler = (e) => {
-        console.log(e.target.dataset.word)
+        // Define punctuations characters to remove from selected word
+        var regex = /[".,?!\s]/g;
+        // Replace character with empty string
+        var result = e.target.dataset.word.replace(regex, '');
+        console.log(result)
         // get definition
         // button to save to list
     }
@@ -55,15 +60,21 @@ class Story extends Component {
         return(
      
             <div>
+                <div className="row auto">
+                    <div className="col">
+                        <h3 className="title">{this.props.data.title} by {this.props.data.author}</h3>
+                    </div>
+                    <div className="col">
+                        <h3 className="title">{this.props.data.available[0].title}</h3>
+                    </div>
+                </div>
                 
-                {this.props.data.title}<br/>
-                {this.props.data.author}<br/>
                 <div className='row auto'>
                     <div className='col'>
-                        <div className='message' id="test"></div>
+                        <div className='message focus' id="test">{this.state.paragraphs}</div>
                     </div>
                     <div className='col'>
-                        <div className='message success' id='translatedText'></div>
+                        <div className='message success' id='translatedText'>{this.state.translaredParagraphs}</div>
                     </div>
                 </div>
             </div>

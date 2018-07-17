@@ -58,3 +58,13 @@
   float: left;
   clear: none
 }
+
+#selectedLang p {
+  text-transform: uppercase;
+  margin-top: 8px
+}
+
+.container {
+  padding-left: 5em;
+  padding-right: 5em;
+}

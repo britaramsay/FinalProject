@@ -59,7 +59,9 @@ class App extends Component {
         return(
             <Router>
                 <div>
+                    <div className="container fluid">
                     <Jumbotron />
+
                     <Nav login = {this.login} logout = {this.logout} user = {this.state.user} />
                     {/* Disable links if not logged in */}
                     <Switch>
@@ -68,6 +70,7 @@ class App extends Component {
                         <Route exact path="/stories" component={Stories} />
                         <Route exact path="/profile" component={Profile} user = {this.state.user}/>
                     </Switch>
+                    </div>
                 </div>
             </Router>
         )
