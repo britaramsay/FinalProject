@@ -29,17 +29,19 @@ class Stories extends Component {
                     // List languages available in
                     item.available = item.available.map(x => x.language)
                     // Return story information in table format
-                    return (<tr key={item._id} id={item._id} data-languages={item.available} onClick={this.onItemClickHandler}>
-                                <td className="w20" id={item._id} onClick={this.onItemClickHandler}>
-                                    {item.title}
-                                </td>
-                                <td className="w20" id={item._id} onClick={this.onItemClickHandler}>
-                                    {item.author}
-                                </td>
-                                <td className="w20" id={item._id} onClick={this.onItemClickHandler}>
-                                    {item.available}
-                                </td>
-                            </tr>)
+                    return (
+                        <tr key={item._id} id={item._id} data-languages={item.available} onClick={this.onItemClickHandler}>
+                            <td className="w20" id={item._id} onClick={this.onItemClickHandler}>
+                                {item.title}
+                            </td>
+                            <td className="w20" id={item._id} onClick={this.onItemClickHandler}>
+                                {item.author}
+                            </td>
+                            <td className="w20" id={item._id} onClick={this.onItemClickHandler}>
+                                {item.available}
+                            </td>
+                        </tr>
+                    )
                 })
                 this.setState({story_titles: stories})
             })
@@ -71,12 +73,11 @@ class Stories extends Component {
             <div>
                 <div className="row auto">
                     <div className="col-3">
-                    <button className="button secondary upper outline" id='test' data-component="dropdown" data-target="#my-dropdown">
-                        Choose Language
-                        <span className="caret down"></span>
-                    </button>
+                        <button className="button secondary upper outline" id='test' data-component="dropdown" data-target="#my-dropdown">
+                            Choose Language
+                            <span className="caret down"></span>
+                        </button>
                     </div>
-                    
                     <div className="col-6" id="selectedLang">
                     </div>
                 </div>
@@ -97,6 +98,7 @@ class Stories extends Component {
                 {this.state.story ? 
                     // If story state is not null, call Story component
                     // TODO: set story state to null when stories link is clicked.
+                    // Wont need in this component, only List.
                     <Story data={this.state.story}/>
                     :
                     <div>

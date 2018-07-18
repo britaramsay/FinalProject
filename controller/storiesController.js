@@ -22,4 +22,14 @@ module.exports = {
         res.json(dbModel)})
       .catch(err => res.status(422).json(err));
   }
+  /*
+  * findBoth: function (req, res) {
+  *   db.Story
+  *     .find({_id: req.params.id})
+  *     .populate('available')
+  *     .then(dbModel => {
+  *       dbModel.available.filter(x => {x === 'req.params.language'})  
+  *     })
+  * }
+  */
 }

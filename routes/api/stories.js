@@ -5,9 +5,10 @@ const storiesController = require("../../controller/storiesController");
 router.route("/")
   .get(storiesController.findAll)
 
-// // Matches with "/api/books/:id"
 router
   .route("/:id")
   .get(storiesController.findOne)
 
+// router.route("/:language/:id")
+//   .get(storiesController.findBoth)
 module.exports = router;

@@ -23,7 +23,18 @@ class List extends Component {
 
     // Will be used for opening story or translating
     onItemClickHandler = (e) => {
-        console.log(e.target)
+        // console.log(e.target.id)
+          
+        // var action = e.target.id.split('-')
+        // if(action[1] == 'read')
+        //     API.getBoth(action[2], action[0]) 
+        //         .then(res => {
+        //             console.log(res)
+        //         })
+        //         .catch( err => console.log(err))
+         // else if(action[1] == 'translate')
+               // Call translation API
+         
     }
 
     componentWillReceiveProps = (props) => {
@@ -34,14 +45,20 @@ class List extends Component {
     }
 
     getHtml = (res, language) => {
-        console.log(res, language)
+        // console.log(res, language)
+        var storyClass = '',
+            storyId = '';
 
         var stories = res.data.map(item => {
             // Set property isAvailable if it is already saved in this language
-            if(item.available.indexOf(language) !== -1) 
+            if(item.available.indexOf(language) !== -1) {
                 item.isAvailable = 'Read in ' + language
-            else  
+                storyId = item._id + '-read-' + language
+            }
+            else {
                 item.isAvailable = 'Translate'
+                storyId = item._id + '-translate-' + language
+            }
 
             // Return story information in table format
             return (
@@ -53,7 +70,9 @@ class List extends Component {
                         {item.author}
                     </td>
                     <td className="w20" id={item._id} onClick={this.onItemClickHandler}>
-                        {item.isAvailable}
+                        <button className="button secondary upper outline" id={storyId} onClick={this.onItemClickHandler}>
+                            {item.isAvailable}
+                        </button>
                         {/* // Make button, class either read or translate, make id story id and language */}
                     </td>
                 </tr>
