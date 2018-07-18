@@ -13,7 +13,8 @@ class Story extends Component {
     }
   
     componentDidMount() {
-        console.log(this.props.data.available[0].paragraphs)
+        console.log(this.props.data)
+
         var paragraphs = this.props.data.paragraphs.map((element, i) => {
             return this.makeStoryHTML(element, i)   
         });
@@ -21,14 +22,14 @@ class Story extends Component {
         var translaredParagraphs = this.props.data.available[0].paragraphs.map((element, i) => {
             return this.makeStoryHTML(element, i)
         })
+
         this.setState({paragraphs: paragraphs})
         this.setState({translaredParagraphs: translaredParagraphs})
-        // ReactDOM.render(paragraphs, document.getElementById('test'))
-        // ReactDOM.render(translaredParagraphs, document.getElementById('translatedText'))
     }
 
     makeStoryHTML = (element, i) => {
         var wordsArr = element.split(' ')
+
         var htmlWords = wordsArr.map( (x, index) => {
 
             var id = i + '-' + index
