@@ -95,12 +95,12 @@ class Stories extends Component {
                     </ul>
                 </div>
                 
-                {this.state.story ? 
+                {/* {this.state.story ? 
                     // If story state is not null, call Story component
                     // TODO: set story state to null when stories link is clicked.
                     // Wont need in this component, only List.
                     <Story data={this.state.story}/>
-                    :
+                    : */}
                     <div>
                         {this.state.language ? 
                             <List stories={this.state.response} language={this.state.language}/>
@@ -121,7 +121,7 @@ class Stories extends Component {
                             </div>                              
                         }
                     </div>
-                }
+                {/* } */}
             </div>
         )
     }

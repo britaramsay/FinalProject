@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import '../App.css';
 import API from "../utils/API";
 import ReactDOM from 'react-dom';
+import Story from './Story'
 
 class List extends Component {
     constructor() {
@@ -22,16 +23,20 @@ class List extends Component {
     }
 
     // Will be used for opening story or translating
-    onItemClickHandler = (e) => {
-        // console.log(e.target.id)
+    getStories = (e) => {
+        console.log(e.target.id)
           
-        // var action = e.target.id.split('-')
-        // if(action[1] == 'read')
-        //     API.getBoth(action[2], action[0]) 
-        //         .then(res => {
-        //             console.log(res)
-        //         })
-        //         .catch( err => console.log(err))
+        var action = e.target.id.split('-')
+        if(action[1] == 'read') {
+            API.getBoth(action[0], action[2]) 
+                .then(res => {
+                    console.log(res)
+                    this.setState({story: res.data[0]})
+                })
+                .catch( err => console.log(err))
+                
+        }
+        
          // else if(action[1] == 'translate')
                // Call translation API
          
@@ -70,7 +75,7 @@ class List extends Component {
                         {item.author}
                     </td>
                     <td className="w20" id={item._id} onClick={this.onItemClickHandler}>
-                        <button className="button secondary upper outline" id={storyId} onClick={this.onItemClickHandler}>
+                        <button className="button secondary upper outline" id={storyId} onClick={this.getStories}>
                             {item.isAvailable}
                         </button>
                         {/* // Make button, class either read or translate, make id story id and language */}
@@ -84,18 +89,23 @@ class List extends Component {
     render () {  
         return(
             <div>
-                <table className="striped">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Already Translated</th>
-                        </tr>
-                    </thead>
-                        <tbody>
-                            {this.state.stories}
-                        </tbody>
-                </table>
+                {this.state.story ? 
+                    <Story data={this.state.story}/>
+                    :
+                    <table className="striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Already Translated</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                {this.state.stories}
+                            </tbody>
+                    </table>
+                }
+                
             </div>        
         )
     }
