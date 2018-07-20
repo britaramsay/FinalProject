@@ -103,12 +103,12 @@ module.exports = {
                   else {
                     var query = {}
                     query[req.params.language.toLowerCase()] = item._id
-                    console.log(query)
 
                     db.English
                       .update({_id: req.params.id}, query, (err, affected, resp) => {
                         console.log(resp)
                       })
+                      res.json('saved')
                   }
                 })
 

@@ -29,8 +29,13 @@ class List extends Component {
 
     // Will be used for opening story or translating
     getStories = (e) => {
-          
-        var action = e.target.id.split('-')
+        var action = ''
+        if(!e.target) {
+            action = e.split('-')
+        }
+        else
+            action = e.target.id.split('-')
+
         if(action[1] === 'read') {
             API.getBoth(action[0], action[2]) 
                 .then(res => {
@@ -42,6 +47,7 @@ class List extends Component {
             API.translate(action[0], action[2])
                 .then(res => {
                     console.log(res)
+                    this.getStories(action[0] + '-read-' + action[2])
                     // this.setState({story: res.data[0]})
                 })
                 .catch( err => console.log(err))
