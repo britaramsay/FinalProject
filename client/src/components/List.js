@@ -14,17 +14,24 @@ class List extends Component {
     }
   
     componentDidMount() {
+        console.log('change')
         // Set desired language for later use
         this.setState({language: this.props.language})
         // Get story list html for given props
-        var stories = this.getHtml(this.props.stories, this.props.language)
-        // Set state stories to list
-        this.setState({stories: stories})
+        API.getStories()
+            .then(res => {
+                this.setState({response: res})
+                this.setState({stories: this.getHtml(res, this.props.language)})
+            })
+            .catch( err => console.log(err))
+        // var stories = this.getHtml(this.props.stories, this.props.language)
+        // // Set state stories to list
+        // this.setState({stories: stories})
     }
 
     // Will be used for opening story or translating
     getStories = (e) => {
-        console.log(e.target.id)
+        console.log(this.state.language)
           
         var action = e.target.id.split('-')
         if(action[1] === 'read') {
@@ -48,8 +55,10 @@ class List extends Component {
     }
 
     componentWillReceiveProps = (props) => {
-        // console.log(props.stories, props.language)
-        var stories = this.getHtml(props.stories, props.language)
+        console.log(props.language)
+        this.setState({language: props.language})
+
+        var stories = this.getHtml(this.state.response, props.language)
 
         this.setState({stories: stories})
     }

@@ -66,7 +66,9 @@ class Stories extends Component {
                 
                 <div>
                     {this.state.language ? 
-                        <List stories={this.state.response} language={this.state.language}/>
+                        <List language={this.state.language}/>
+
+                        // <List stories={this.state.response} language={this.state.language}/>
                         :
                         <p>choose language</p>
                                                
