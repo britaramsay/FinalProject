@@ -12,5 +12,11 @@ router.route("/definition/:language/:word")
 
 router.route("/translate/:id/:language")
   .get(storiesController.translateStory)
-  
+
+router.route("/set/language/:language")
+  .get(storiesController.language)
+
+router.route("/getLanguage")
+  .get(storiesController.getLanguage)
+
 module.exports = router;

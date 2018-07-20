@@ -1,15 +1,17 @@
-const express = require("express");
-const path = require("path");
-const bodyParser = require("body-parser");
-const PORT = process.env.PORT || 3001;
-const app = express();
-const mongoose = require("mongoose");
-const apiRoutes = require("./routes");
-
+const express = require("express"),
+      path = require("path"),
+      bodyParser = require("body-parser"),
+      PORT = process.env.PORT || 3001,
+      app = express(),
+      mongoose = require("mongoose"),
+      apiRoutes = require("./routes"),
+      cookieParser = require('cookie-parser');
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
+
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

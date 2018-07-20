@@ -3,6 +3,15 @@ const axios = require('axios')
 const translator = require('../client/src/watson-api')
 // Defining methods for the booksController
 module.exports = {
+  language: function (req, res) {  
+    console.log(req.params.language)
+    res.cookie('language', req.params.language, { maxAge: 900000 });
+    console.log(res.cookie.language)
+
+  },
+  getLanguage: function (req, res) {  
+    console.log(req.cookies)
+  },
   findAll: function(req, res) {
     db.English
       .find({})

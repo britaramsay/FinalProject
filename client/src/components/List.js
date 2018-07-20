@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import '../App.css';
 import API from "../utils/API";
 // import ReactDOM from 'react-dom';
-import Story from './Story'
+import Story from './Story';
+import $ from 'jquery';
 
 class List extends Component {
     constructor() {
@@ -17,6 +18,8 @@ class List extends Component {
         console.log('change')
         // Set desired language for later use
         this.setState({language: this.props.language})
+        $('#selectedLang').html('<p>' + this.props.language + '</p>')
+
         // Get story list html for given props
         API.getStories()
             .then(res => {
@@ -112,7 +115,7 @@ class List extends Component {
                             <tr>
                                 <th>Title</th>
                                 <th>Author</th>
-                                <th>Already Translated</th>
+                                <th>Read or Translate</th>
                             </tr>
                         </thead>
                             <tbody>
