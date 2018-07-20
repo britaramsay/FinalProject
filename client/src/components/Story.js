@@ -15,6 +15,7 @@ class Story extends Component {
   
     componentDidMount() {
         $('#test').hide()
+        $('#test1').html("<a href='/stories'><button className='button secondary upper outline'>Back</button></a>")
         console.log(this.props)
         this.setState({language: this.props.language})
 
@@ -72,7 +73,6 @@ class Story extends Component {
      
             <div>
                 <div className="row auto">
-                    <a href='/stories'>Back</a>
                     <div className="col">
                         <h3 className="title">{this.props.data.title} by {this.props.data.author}</h3>
                     </div>

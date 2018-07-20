@@ -18,7 +18,7 @@ class Nav extends Component {
     }
 
     componentDidMount() {
-        Modal.setAppElement('.fa-cog')
+        // Modal.setAppElement('.fa-cog')
     }
 
     openModal() {
@@ -46,8 +46,6 @@ class Nav extends Component {
                     :
                     <p></p>
                 }
-                {/* fix w css? if({this.state.user}) */}
-                <i className="fas fa-cog" onClick={this.openModal}></i>
             </span>
             
             <ul className="nav justify-content-center">
