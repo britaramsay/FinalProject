@@ -100,7 +100,16 @@ module.exports = {
               db[req.params.language]
                 .create({title: title, paragraphs: text, author: dbModel[0].author}, (err, item) =>{
                   if(err) console.log(err)
-                  else console.log(item)
+                  else {
+                    var query = {}
+                    query[req.params.language.toLowerCase()] = item._id
+                    console.log(query)
+
+                    db.English
+                      .update({_id: req.params.id}, query, (err, affected, resp) => {
+                        console.log(resp)
+                      })
+                  }
                 })
 
               //       // SAVE TO STORY
