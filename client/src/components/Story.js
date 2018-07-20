@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import '../App.css';
 import API from "../utils/API";
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 
 class Story extends Component {
     constructor() {
@@ -13,21 +13,23 @@ class Story extends Component {
     }
   
     componentDidMount() {
-        console.log(this.props.data)
+        console.log(this.props)
+        this.setState({language: this.props.language})
 
         var paragraphs = this.props.data.paragraphs.map((element, i) => {
             return this.makeStoryHTML(element, i)   
         });
 
-        var translaredParagraphs = this.props.data.available[0].paragraphs.map((element, i) => {
+        var translatedParagraphs = this.props.data[this.props.language.toLowerCase()].paragraphs.map((element, i) => {
             return this.makeStoryHTML(element, i)
         })
-
+        console.log(paragraphs)
         this.setState({paragraphs: paragraphs})
-        this.setState({translaredParagraphs: translaredParagraphs})
+        this.setState({translatedParagraphs: translatedParagraphs})
     }
 
     makeStoryHTML = (element, i) => {
+        // console.log(element)
         var wordsArr = element.split(' ')
 
         var htmlWords = wordsArr.map( (x, index) => {
@@ -54,6 +56,13 @@ class Story extends Component {
         var result = e.target.dataset.word.replace(regex, '');
         console.log(result)
         // get definition
+        var langCode = ''
+        if(this.state.language === 'German')
+            langCode = 'deu'
+        API.getWordInfo(langCode, result)
+            // .then(res => {
+            //     console.log(res)
+            // })
         // button to save to list
     }
 
@@ -66,7 +75,7 @@ class Story extends Component {
                         <h3 className="title">{this.props.data.title} by {this.props.data.author}</h3>
                     </div>
                     <div className="col">
-                        <h3 className="title">{this.props.data.available[0].title}</h3>
+                        <h3 className="title">{this.props.data[this.props.language.toLowerCase()].title}</h3>
                     </div>
                 </div>
                 
@@ -75,7 +84,7 @@ class Story extends Component {
                         <div className='message focus' id="test">{this.state.paragraphs}</div>
                     </div>
                     <div className='col'>
-                        <div className='message success' id='translatedText'>{this.state.translaredParagraphs}</div>
+                        <div className='message success' id='translatedText'>{this.state.translatedParagraphs}</div>
                     </div>
                 </div>
             </div>

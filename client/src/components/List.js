@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import '../App.css';
 import API from "../utils/API";
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import Story from './Story'
 
 class List extends Component {
@@ -27,7 +27,7 @@ class List extends Component {
         console.log(e.target.id)
           
         var action = e.target.id.split('-')
-        if(action[1] == 'read') {
+        if(action[1] === 'read') {
             API.getBoth(action[0], action[2]) 
                 .then(res => {
                     console.log(res)
@@ -36,10 +36,15 @@ class List extends Component {
                 .catch( err => console.log(err))
                 
         }
-        
-         // else if(action[1] == 'translate')
-               // Call translation API
-         
+        else if(action[1] === 'translate') {
+            API.translate(action[0], action[2])
+                .then(res => {
+                    console.log(res)
+                    // this.setState({story: res.data[0]})
+                })
+                .catch( err => console.log(err))
+                    // this.setState({story: res.data[0]})
+        }
     }
 
     componentWillReceiveProps = (props) => {
@@ -50,13 +55,14 @@ class List extends Component {
     }
 
     getHtml = (res, language) => {
-        // console.log(res, language)
-        var storyClass = '',
-            storyId = '';
+        console.log(res, language)
+        var storyId = '';
 
         var stories = res.data.map(item => {
+            console.log(language)
+
             // Set property isAvailable if it is already saved in this language
-            if(item.available.indexOf(language) !== -1) {
+            if(item.hasOwnProperty(language.toLowerCase())) {
                 item.isAvailable = 'Read in ' + language
                 storyId = item._id + '-read-' + language
             }
@@ -90,7 +96,7 @@ class List extends Component {
         return(
             <div>
                 {this.state.story ? 
-                    <Story data={this.state.story}/>
+                    <Story data={this.state.story} language={this.state.language}/>
                     :
                     <table className="striped">
                         <thead>
