@@ -17,18 +17,21 @@ class Stories extends Component {
   
     // Check if user is logged in or out when component mounts
     componentDidMount() {
-        console.log(this.state.language)
-
         API.getStories()
             .then(res => {
                 this.setState({response: res})
+
+                if(document.cookie.indexOf("language") !== -1)
+                    this.setState({language: document.cookie.substring(document.cookie.indexOf('language=') + 9, document.cookie.length)})
             })
             .catch( err => console.log(err))
     }
 
     selectLanguage = (e) => {
         var language = e.target.textContent
-        // Toggle dropdown after selection
+        
+        document.cookie = "language="+language+";"
+
         $('#test').click()
         // show selected on screen
         $('#selectedLang').html('<p>' + language + '</p>')
@@ -42,6 +45,7 @@ class Stories extends Component {
             <div>
                 <div className="row auto">
                     <div className="col-3">
+                        <div id="test1"></div>
                         <button className="button secondary upper outline" id='test' data-component="dropdown" data-target="#my-dropdown">
                             Choose Language
                             <span className="caret down"></span>
@@ -66,7 +70,9 @@ class Stories extends Component {
                 
                 <div>
                     {this.state.language ? 
-                        <List stories={this.state.response} language={this.state.language}/>
+                        <List language={this.state.language}/>
+
+                        // <List stories={this.state.response} language={this.state.language}/>
                         :
                         <p>choose language</p>
                                                

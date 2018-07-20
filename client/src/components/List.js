@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import '../App.css';
 import API from "../utils/API";
-// import ReactDOM from 'react-dom';
-import Story from './Story'
+import Story from './Story';
+import $ from 'jquery';
 
 class List extends Component {
     constructor() {
@@ -16,25 +16,27 @@ class List extends Component {
     componentDidMount() {
         // Set desired language for later use
         this.setState({language: this.props.language})
+        $('#selectedLang').html('<p>' + this.props.language + '</p>')
+
         // Get story list html for given props
-        var stories = this.getHtml(this.props.stories, this.props.language)
-        // Set state stories to list
-        this.setState({stories: stories})
+        API.getStories()
+            .then(res => {
+                this.setState({response: res})
+                this.setState({stories: this.getHtml(res, this.props.language)})
+            })
+            .catch( err => console.log(err))
     }
 
     // Will be used for opening story or translating
     getStories = (e) => {
-        console.log(e.target.id)
           
         var action = e.target.id.split('-')
         if(action[1] === 'read') {
             API.getBoth(action[0], action[2]) 
                 .then(res => {
-                    console.log(res)
                     this.setState({story: res.data[0]})
                 })
                 .catch( err => console.log(err))
-                
         }
         else if(action[1] === 'translate') {
             API.translate(action[0], action[2])
@@ -48,19 +50,17 @@ class List extends Component {
     }
 
     componentWillReceiveProps = (props) => {
-        // console.log(props.stories, props.language)
-        var stories = this.getHtml(props.stories, props.language)
+        this.setState({language: props.language})
+
+        var stories = this.getHtml(this.state.response, props.language)
 
         this.setState({stories: stories})
     }
 
     getHtml = (res, language) => {
-        console.log(res, language)
         var storyId = '';
 
         var stories = res.data.map(item => {
-            console.log(language)
-
             // Set property isAvailable if it is already saved in this language
             if(item.hasOwnProperty(language.toLowerCase())) {
                 item.isAvailable = 'Read in ' + language
@@ -103,7 +103,7 @@ class List extends Component {
                             <tr>
                                 <th>Title</th>
                                 <th>Author</th>
-                                <th>Already Translated</th>
+                                <th>Read or Translate</th>
                             </tr>
                         </thead>
                             <tbody>
@@ -111,7 +111,6 @@ class List extends Component {
                             </tbody>
                     </table>
                 }
-                
             </div>        
         )
     }

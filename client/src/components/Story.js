@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import '../App.css';
 import API from "../utils/API";
+import $ from 'jquery';
 // import ReactDOM from 'react-dom';
 
 class Story extends Component {
@@ -13,6 +14,8 @@ class Story extends Component {
     }
   
     componentDidMount() {
+        $('#test').hide()
+        $('#test1').html("<a href='/stories'><button className='button secondary upper outline'>Back</button></a>")
         console.log(this.props)
         this.setState({language: this.props.language})
 
@@ -23,7 +26,6 @@ class Story extends Component {
         var translatedParagraphs = this.props.data[this.props.language.toLowerCase()].paragraphs.map((element, i) => {
             return this.makeStoryHTML(element, i)
         })
-        console.log(paragraphs)
         this.setState({paragraphs: paragraphs})
         this.setState({translatedParagraphs: translatedParagraphs})
     }

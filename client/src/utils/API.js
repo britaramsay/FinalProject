@@ -19,5 +19,13 @@ export default {
   },
   translate: function (id, language) {  
     return axios.get('/api/stories/translate/'+id+'/'+language)
+  },
+  setLanguage: function (language) {  
+    console.log('api' + language)
+    return axios.get('/api/stories/set/language/' + language)
+  },
+  getLanguage: function () {  
+    return axios.get('/api/stories/getLanguage')
   }
+
 }
