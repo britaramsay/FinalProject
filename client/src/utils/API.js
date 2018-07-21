@@ -26,6 +26,18 @@ export default {
   },
   getLanguage: function () {  
     return axios.get('/api/stories/getLanguage')
+  },
+  addUser: function (uid) {  
+    return axios.get('/api/stories/new/user/' + uid)
+  },
+  saveWord: function (uid, word, lang, english) {  
+    console.log(uid, word, english)
+    return axios.get('/api/stories/save/word/'+uid+'/'+word+'/'+lang+'/'+english)
+  },
+  translateWord: function (word, language) {  
+    return axios.get('/api/stories/translate/word/'+word+'/'+language)
+  },
+  getVocab: function (user, language) {  
+    return axios.get('/api/stories/profile/'+user+'/'+language)
   }
-
 }

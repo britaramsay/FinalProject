@@ -48,14 +48,13 @@ class List extends Component {
                 .then(res => {
                     console.log(res)
                     this.getStories(action[0] + '-read-' + action[2])
-                    // this.setState({story: res.data[0]})
                 })
                 .catch( err => console.log(err))
-                    // this.setState({story: res.data[0]})
         }
     }
 
     componentWillReceiveProps = (props) => {
+        console.log(props)
         this.setState({language: props.language})
 
         var stories = this.getHtml(this.state.response, props.language)

@@ -17,6 +17,7 @@ class Stories extends Component {
   
     // Check if user is logged in or out when component mounts
     componentDidMount() {
+        console.log(this.props)
         API.getStories()
             .then(res => {
                 this.setState({response: res})
@@ -28,6 +29,8 @@ class Stories extends Component {
     }
 
     selectLanguage = (e) => {
+        console.log(this.state.user)
+
         var language = e.target.textContent
         
         document.cookie = "language="+language+";"

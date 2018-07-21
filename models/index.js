@@ -7,5 +7,7 @@ module.exports  = {
     German: require('./german'),
     Italian: require('./italian'),
     Russian: require('./russian'),
-    Spanish: require('./spanish')
+    Spanish: require('./spanish'),
+    User: require('./user'),
+    Vocab: require('./vocab')
 }

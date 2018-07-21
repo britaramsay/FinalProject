@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Stories from './components/Stories';
 import Profile from './components/Profile';
 import Jumbotron from './components/Jumbotron';
+import API from "./utils/API";
 
 class App extends Component {
 
@@ -37,6 +38,8 @@ class App extends Component {
         .then(result => {
             const user = result.user;
             console.log(user)
+            API.addUser(user.uid)
+
             this.setState({
                 // Set user
                 user
@@ -67,8 +70,8 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" component={Home} />
                         {/* <Route exact path="/settings" component={Settings} /> */}
-                        <Route exact path="/stories" component={Stories} />
-                        <Route exact path="/profile" component={Profile} user = {this.state.user}/>
+                        <Route exact path="/stories" component={Stories}/>
+                        <Route exact path="/profile" component={Profile}/>
                     </Switch>
                     </div>
                 </div>
