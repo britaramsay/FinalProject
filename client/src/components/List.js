@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import '../App.css';
 import API from "../utils/API";
 import Story from './Story';
+import { auth } from '../firebase/firebase.js';
 import $ from 'jquery';
 
 class List extends Component {
@@ -18,13 +19,19 @@ class List extends Component {
         this.setState({language: this.props.language})
         $('#selectedLang').html('<p>' + this.props.language + '</p>')
 
-        // Get story list html for given props
-        API.getStories()
-            .then(res => {
-                this.setState({response: res})
-                this.setState({stories: this.getHtml(res, this.props.language)})
-            })
-            .catch( err => console.log(err))
+        auth.onAuthStateChanged(user => {
+            if(user) {
+                this.setState({user: user.uid})
+                // Get story list html for given props
+                API.getStories(user.uid)
+                .then(res => {
+                    this.setState({response: res})
+                    this.setState({stories: this.getHtml(res, this.props.language)})
+                })
+                .catch( err => console.log(err))
+            }
+        })
+        
     }
 
     // Will be used for opening story or translating

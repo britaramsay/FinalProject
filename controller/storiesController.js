@@ -20,7 +20,7 @@ module.exports = {
       .catch(err => {
         console.log(err)
       })
-  },
+  }, //vv unneeded
   language: function (req, res) {  
     console.log(req.params.language)
     res.cookie('language', req.params.language, { maxAge: 900000 });
@@ -32,7 +32,7 @@ module.exports = {
   },
   findAll: function(req, res) {
     db.English
-      .find({})
+      .find({$or: [{uid: req.params.id}, {private: false}]})
       .then(model => {
         res.json(model)
       })
@@ -208,5 +208,21 @@ module.exports = {
         var vocab = dbModel.vocab.filter( word => word.language == req.params.language)
         res.json(vocab)
       })
+  },
+  uploadDoc: function (req, res) {  
+    console.log(req.params, req.body)
+    var doc = req.body.filter(x => x.length > 0)
+    db.English
+      .create({
+        title: req.params.title,
+        author: req.params.author,
+        paragraphs: doc,
+        uid: req.params.user,
+        private: req.params.privat
+      }).then((err, neww) => {
+        if(err) console.log(err)
+        else res.json(neww)
+      })
   }
+  //,getMine()
 }

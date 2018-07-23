@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import '../App.css';
 import API from "../utils/API";
-import Story from './Story';
 import { auth } from '../firebase/firebase.js';
 import $ from 'jquery';
 
@@ -10,7 +9,9 @@ class Profile extends Component {
         super()
 
         this.state = {
-
+            title:'',
+            author:'',
+            private:false
         }
         this.componentCleanup = this.componentCleanup.bind(this);
     }
@@ -50,7 +51,7 @@ class Profile extends Component {
             .then(res => {
                 console.log(res.data)
                 var data = res.data.map(x => {
-                    return <li key={x._id}><span>{x.word} - {x.english} </span><span onClick={this.deleteWord} id={x._id}>X</span></li>
+                    return <li key={x._id}><span>{x.word} - {x.english.toLowerCase()} </span><span onClick={this.deleteWord} id={x._id}>X</span></li>
                 })
                 this.setState({words: data})
             })
@@ -78,6 +79,43 @@ class Profile extends Component {
         
         this.setState({language: language})
         this.setState({words : []})
+    }
+
+    handleFileSelect = (e) => {
+        console.log(e.target.files)
+        var reader = new FileReader()
+        // var newDoc = ''
+        reader.onload = (read) => {
+            var newDoc = read.target.result.split('\n').map(x => x.trim())
+            console.log(newDoc)
+            this.setState({docBody: newDoc})
+
+        }
+        reader.readAsText(e.target.files[0])
+
+    }
+
+    handleInput = (e) => {
+        
+        var input = e.target.type === "checkbox" ?
+            e.target.checked : e.target.value
+        console.log(input)
+        this.setState({[e.target.name]: input})
+        
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(this.state)
+        // ??
+        document.getElementById("form").reset();
+        API.uploadFile(this.state.user, this.state.title, this.state.author, this.state.docBody, this.state.private)
+
+
+        this.setState({title: ''})
+        this.setState({author: ''})
+        this.setState({docBody: ''})
+        this.setState({private: false})
     }
 
     render () {  
@@ -110,11 +148,22 @@ class Profile extends Component {
                     </ul>
                 </div>
                 
-                <div>
-                    {this.state.language} Vocaulary List
-                    <ul>
-                        {this.state.words}
-                    </ul>
+                <div className="row">
+                    <div className="col-6">
+                        {this.state.language} Vocaulary List
+                        <ul>
+                            {this.state.words}
+                        </ul>
+                    </div>
+                    <div className="col-6">
+                        <form onSubmit={this.handleSubmit} id='form'>
+                            Title <input type="text" name="title" value={this.state.title} onChange={this.handleInput} required />
+                            Author (Optional) <input type="text" name="author" value={this.state.author} onChange={this.handleInput} />
+                            <input type="file" id="files" name="files[]" onChange={this.handleFileSelect} required/>
+                            <input type="checkbox" name="private" checked={this.state.private} onChange={this.handleInput} />
+                            <input type="submit" value="Submit"/>
+                        </form>
+                    </div>
                 </div>
             </div>       
         )

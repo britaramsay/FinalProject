@@ -6,6 +6,14 @@ const EnglishSchema = new Schema({
     title: { type: String },
     author: { type: String },
     paragraphs: [{ type: String }],
+    uid: {
+        type: String,
+        required: false
+    },
+    private: {
+        type: Boolean,
+        default: false
+    },
     french: { 
         type: Schema.Types.ObjectId, 
         ref: "French" 

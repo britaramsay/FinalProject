@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const storiesController = require("../../controller/storiesController");
 
-router.route("/")
+router.route("/:id")
   .get(storiesController.findAll)
 
 router.route("/:id/:language")
@@ -19,12 +19,16 @@ router.route("/getLanguage")
 router.route("/new/user/:uid")
   .get(storiesController.newUser)
 
-router.route("/save/word/:uid/:word/:language/:english")
-  .get(storiesController.saveWord)
-
 router.route("/translate/word/:word/:language")
   .get(storiesController.translateWord)
 
 router.route("/profile/:user/:language")
   .get(storiesController.getVocab)
+
+router.route("/:user/:title/:author/:privat")
+  .post(storiesController.uploadDoc)
+
+router.route("/save/word/:uid/:word/:language/:english")
+  .get(storiesController.saveWord)
+
 module.exports = router;

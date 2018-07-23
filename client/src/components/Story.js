@@ -87,9 +87,9 @@ class Story extends Component {
         return(
      
             <div>
-                {this.state.word ?
+                {this.state.wordEnglish ?
                     <div className="alert" data-kube="alert">
-                        {this.state.word} - {this.state.wordEnglish} <i className="far fa-bookmark" id={this.state.word} onClick={this.saveWord}></i>
+                        {this.state.word} - {this.state.wordEnglish.toLowerCase()} <i className="far fa-bookmark" id={this.state.word} onClick={this.saveWord}></i>
                         <span className="close is-small" data-type="close"></span>
                     </div>
                     :

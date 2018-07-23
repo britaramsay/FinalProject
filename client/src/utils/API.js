@@ -2,12 +2,12 @@ import axios from "axios";
 
 export default {
   // Gets all books
-  getStories: function() {
-    return axios.get("/api/stories");
-  },
-  getStory: function(id) {
+  getStories: function(id) {
     return axios.get("/api/stories/"+id);
   },
+  // getStory: function(id) {
+  //   return axios.get("/api/stories/"+id);
+  // },
   // this is just for getting ones already in db
   getBoth: function(id, language) {
     console.log(id, language)
@@ -39,5 +39,9 @@ export default {
   },
   getVocab: function (user, language) {  
     return axios.get('/api/stories/profile/'+user+'/'+language)
+  },
+  uploadFile: function(user, title, author, doc, privat) {
+    console.log(doc)
+    return axios.post('/api/stories/'+user+'/'+title+'/'+author+'/'+privat, doc)
   }
 }

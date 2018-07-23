@@ -14,15 +14,6 @@ const StorySchema = new Schema({
   ]
 });
 
-// const TranslatedSchema = new Schema({
-//   title: { type: String },
-//   author: { type: String },
-//   language: String,
-//   paragraphs: [{
-//                 type: String
-//             }]
-// });
-
 const Story = mongoose.model("Storyeng", StorySchema);
 
 module.exports = Story;
